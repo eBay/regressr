@@ -1,0 +1,20 @@
+service:
+  baseURL       : http://localhost:8001/api/v1/proxy/namespaces/test/services/aio-svc:http
+
+commonHeaders:
+  Authorization   : Basic YWRtaW46ZGJyeXIyYTE4UzVyYnQ2cg==
+  X-N1-User-Id    : 22e68b39-d89b-4fe1-b980-bec59e017eab
+  X-N1-Client-Id  : postman
+  Content-Type    : application/json
+
+requests:
+
+  - requestName: how are you
+    path: /utterance
+    method: POST
+    requestBuilder: org.ebayopensource.regression.internal.components.requestBuilder.FileHTTPBodyBuilder
+    dataInput:
+      payloadFile     : /tmp/examplePayloadFile
+    recorder: org.ebayopensource.regression.internal.components.recorder.SimpleHTTPJSONRecorder
+    comparator: org.ebayopensource.regression.internal.components.comparator.SimpleHTTPJsonComparator
+

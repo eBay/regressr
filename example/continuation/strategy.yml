@@ -1,0 +1,16 @@
+service:
+  baseURL       : http://localhost:9882/endpoint
+
+commonHeaders:
+  Content-Type    : application/json
+
+requests:
+
+  - requestName: traverse through HATEOAS service.
+    path: /shopping/search/shoes
+    method: GET
+    continuation: org.ebayopensource.regression.example.HATEOASContinuation
+    progressPrinter: org.ebayopensource.regression.internal.components.printer.URLProgressPrinter
+    recorder: org.ebayopensource.regression.internal.components.recorder.SimpleHTTPJSONRecorder
+    comparator: org.ebayopensource.regression.internal.components.comparator.StrictHTTPJsonComparator
+

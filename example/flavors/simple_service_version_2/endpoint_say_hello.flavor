@@ -1,0 +1,11 @@
+## ! ~/.rest_shifter/flavors/hello_world.flavor
+method_used                 = "get"
+path                        = "/endpoint/say_hello"
+request_accept              = ""
+request_content_type        = ""
+response_sleep              = 0
+response_status             = "200"
+response_body               = {   "mission": "b1168d34-d766-49f2-9cb1-bb28b5d5a1c8",   "utterances": [     {       "action": {         "message": "Hello to you too, James.",         "type": "GREETING", "info" : "New User"       },       "type": "action"     }   ],   "diagnostics": {} }
+response_content_type       = "application/json"
+response_location           = ""
+response_headers            = []

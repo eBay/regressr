@@ -1,0 +1,12 @@
+{
+  "conversationId": "MESSENGER:1234",
+  "maxResults": 36,
+  "utterances": [
+    {
+      "type": "text",
+      "text" : {
+        "message": "Show me shoes"
+      }
+    }
+  ]
+}

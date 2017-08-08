@@ -1,0 +1,12 @@
+# Build config for Regressr
+language: scala
+
+scala:
+  - 2.11.8
+
+script:
+  - sbt clean coverage test coverageReport
+
+# This is for codecov.io
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

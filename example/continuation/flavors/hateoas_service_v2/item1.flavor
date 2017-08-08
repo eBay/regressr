@@ -1,0 +1,11 @@
+## ! ~/.rest_shifter/flavors/hello_world.flavor
+method_used                 = "get"
+path                        = "/endpoint/shopping/items/item1"
+request_accept              = ""
+request_content_type        = ""
+response_sleep              = 0
+response_status             = "200"
+response_body               = {"name":"Nike Air Jordan", "price": "$58.20", "condition" : "New", "seller" : "http://localhost:9882/endpoint/sellers/acmeseller"}
+response_content_type       = "application/json"
+response_location           = ""
+response_headers            = []

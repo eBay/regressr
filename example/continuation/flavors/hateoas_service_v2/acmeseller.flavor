@@ -1,0 +1,11 @@
+## ! ~/.rest_shifter/flavors/hello_world.flavor
+method_used                 = "get"
+path                        = "/endpoint/sellers/acmeseller"
+request_accept              = ""
+request_content_type        = ""
+response_sleep              = 0
+response_status             = "200"
+response_body               = {"name" : "Acme Seller", "company" : "Not Acme"}
+response_content_type       = "application/json"
+response_location           = ""
+response_headers            = []

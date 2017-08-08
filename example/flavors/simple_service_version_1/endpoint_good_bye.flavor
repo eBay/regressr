@@ -1,0 +1,11 @@
+## ! ~/.rest_shifter/flavors/hello_world.flavor
+method_used                 = "post"
+path                        = "/endpoint/goodbye"
+request_accept              = ""
+request_content_type        = ""
+response_sleep              = 0
+response_status             = "200"
+response_body               = { "type":"greetings", "text":"goodbye", "comment":"Saying goodbye to the user.", "mission":"Goodbye"}
+response_content_type       = "application/json"
+response_location           = ""
+response_headers            = []

@@ -1,0 +1,59 @@
+{
+  "mission": "9f6b89c7-0ec7-43dd-8f00-93819a8bdbf7",
+  "utterances": [
+    {
+      "template_name": "starting_a_new_mission",
+      "message": "Great, let's do something new.",
+      "type": "text"
+    },
+    {
+      "question": {
+        "format": "multi-choice/single-option",
+        "verbose": "Which category would you like? You can say something like Men's Athletic Shoes, Men's Casual Shoes, or Men's Dress Shoes.",
+        "prompt": "Sure - Here it is:",
+        "skipped": false,
+        "optionType": "string",
+        "options": [
+          {
+            "id": 1,
+            "value": "Men's Athletic Shoes"
+          },
+          {
+            "id": 2,
+            "value": "Men's Casual Shoes"
+          },
+          {
+            "id": 3,
+            "value": "Men's Dress Shoes"
+          },
+          {
+            "type": "user_feedback",
+            "id": 4,
+            "value": "👍"
+          },
+          {
+            "type": "user_feedback",
+            "id": 5,
+            "value": "👎"
+          }
+        ],
+        "optionName": "category"
+      },
+      "type": "question"
+    }
+  ],
+  "timing": {
+    "dm-nlu-1": 399.65817,
+    "context-save": 177.95699,
+    "text-validation": 0.531344,
+    "dm-resp-2": 66.398735,
+    "total": 1645.7695,
+    "search-2": 433.5057,
+    "context-get": 135.81258,
+    "dm-nlu": 22.447212,
+    "identity": 86.379585,
+    "nlu-1": 126.70625,
+    "nlu-text": 239.70552
+  },
+  "diagnostics": {}
+}

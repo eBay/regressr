@@ -1,0 +1,33 @@
+service:
+  baseURL       : http://localhost:9882/endpoint
+
+commonHeaders:
+  Content-Type    : application/json
+
+requests:
+
+  - requestName: say_hello
+    path: /say_hello
+    method: GET
+    recorder: org.ebayopensource.regression.internal.components.recorder.SimpleHTTPJSONRecorder
+    comparator: org.ebayopensource.regression.internal.components.comparator.SimpleHTTPJsonComparator
+
+  - requestName: shop for a pair of shoes
+    path: /shopping
+    method: POST
+    requestBuilder: org.ebayopensource.regression.example.ExampleRequestBuilder
+    dataInput:
+      conversationId     : 12345
+      keyword            : Show me a pair of shoes
+      mission_start      : yes
+    recorder: org.ebayopensource.regression.internal.components.recorder.SimpleHTTPJSONRecorder
+    comparator: org.ebayopensource.regression.internal.components.comparator.SimpleHTTPJsonComparator
+
+  - requestName: say goodbye
+    path: /goodbye
+    method: POST
+    requestBuilder: org.ebayopensource.regression.internal.components.requestBuilder.StringHTTPBuilder
+    dataInput:
+      payload            : '{"mission" : "12345", "keyword" : "good bye", "mission_start" : "no" }'
+    recorder: org.ebayopensource.regression.internal.components.recorder.SimpleHTTPJSONRecorder
+    comparator: org.ebayopensource.regression.internal.components.comparator.SimpleHTTPJsonComparator

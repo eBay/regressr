@@ -1,0 +1,11 @@
+## ! ~/.rest_shifter/flavors/hello_world.flavor
+method_used                 = "post"
+path                        = "/endpoint/shopping"
+request_accept              = ""
+request_content_type        = ""
+response_sleep              = 0
+response_status             = "200"
+response_body               = {   "utterances": [     {       "question": {         "format": "multi-choice/single-option",         "verbose": "Would you like Men's Athletic Shoes, Men's Casual Shoes, Men's Dress Shoes, or a different category?",         "options": [           {             "id": 1,             "value": "Men's Athletic Shoes"           },           {             "id": 2,             "value": "Men's Casual Shoes"           },           {             "id": 3,             "value": "Men's Dress Shoes"           },           {             "type": "user_feedback",             "id": 4,             "value": "thumbs_up"           },           {             "type": "user_feedback",             "id": 5,             "value": "thumbs_down"           }         ],         "optionName": "category"       },       "type": "question"     }   ] }
+response_content_type       = "application/json"
+response_location           = ""
+response_headers            = []

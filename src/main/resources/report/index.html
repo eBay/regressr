@@ -1,0 +1,181 @@
+#import(java.util.Date)
+#import(java.text.SimpleDateFormat)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Regressr test report</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div style="width:100%; height: 50px; background-color: white;">
+    <div style="width: 25%; float:left; margin: 0px; background-color: white;"> </div>
+</div>
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Regression test comparison report generated on ${new SimpleDateFormat("EEE, d MMM yyyy 'at' HH:mm:ss z").format(new Date)}</a>
+        </div>
+    </div>
+</nav>
+
+<% import org.ebayopensource.regression.internal.components.comparator.common.CompareMessage %>
+<% import org.ebayopensource.regression.internal.reportGenerator.ReportEntry %>
+<% import org.ebayopensource.regression.internal.reportGenerator.RequestReportEntry %>
+<% import org.ebayopensource.regression.internal.components.recorder.common.RequestRecordingEntry %>
+<% import org.ebayopensource.regression.internal.components.recorder.common.RecordingEntry %>
+<% import org.ebayopensource.regression.internal.components.recorder.common.RequestRecordingEntryTypes %>
+<%@ var reportEntries: Seq[ReportEntry]%>
+<%@ var regressionCount: Int%>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-2 main">
+            <h2 class="sub-header">Number of regressions captured: ${regressionCount}</h2>
+            #for ( reportEntry <- reportEntries )
+            <h2 class="sub-header">Comparison for ${reportEntry.testIdentifier}</h2>
+            <button data-toggle="collapse" class="btn btn-info" data-target="#strategy${reportEntry.testIdentifier}">View Strategy</button>
+            <div id="strategy${reportEntry.testIdentifier}" class="collapse">
+                <br/>
+                <div class="alert alert-info" column-width="50%">
+                    ${reportEntry.strategyFileContent.replaceAll("\n","<br />")}
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <button data-toggle="collapse" class="btn btn-info" data-target="#entriesComparision${reportEntry.testIdentifier}">View Recorded and Replayed Entries</button>
+            <div id="entriesComparision${reportEntry.testIdentifier}" class="collapse">
+                <br/>
+                <table class="table">
+                    <thead>
+                        <th class="col-md-6">
+                            <h3>Recorded Entries</h3>
+                        </th>
+                        <th class="col-md-6">
+                            <h3>Replayed Entries</h3>
+                        </th>
+                    </thead>
+                    <tr>
+                        <td>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <th class="col-md-2">Request Name</th>
+                                    <th class="col-md-2">Description</th>
+                                    <th class="col-md-2">Content</th>
+                                </thead>
+                                #for (requestReportEntry <- reportEntry.requestReportEntries)
+                                    #for (recordingEntry <- requestReportEntry.requestRecordedEntry.entries)
+                                        <tr>
+                                            <td>${requestReportEntry.requestName}</td>
+                                            <td>${recordingEntry.description}</td>
+                                            <% if (recordingEntry.entryType == RequestRecordingEntryTypes.JSON) { %>
+                                            <td>${recordingEntry.data.substring(0, 20) + "..."}</td>
+                                            <% } else { %> <td> ${recordingEntry.data} </td> <% } %>
+                                        </tr>
+                                    #end
+                                #end
+                            </table>
+                        </td>
+                        <td>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <th class="col-md-2">Request Name</th>
+                                    <th class="col-md-2">Description</th>
+                                    <th class="col-md-2">Content</th>
+                                </thead>
+                                #for (requestReportEntry <- reportEntry.requestReportEntries)
+                                    #for (replayedEntry <- requestReportEntry.requestReplayedEntry.entries)
+                                        <tr>
+                                            <td>${requestReportEntry.requestName}</td>
+                                            <td>${replayedEntry.description}</td>
+                                            <% if (replayedEntry.entryType == RequestRecordingEntryTypes.JSON) { %>
+                                            <td>${replayedEntry.data.substring(0, 20) + "..."}</td>
+                                            <% } else { %> <td> ${replayedEntry.data} </td> <% } %>
+                                        </tr>
+                                    #end
+                                #end
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br/>
+            <br/>
+            <%
+                val size = reportEntry.requestReportEntries.map( re => re.reqMessages.size ).sum
+                if (size == 0) {
+            %>
+            <button data-toggle="collapse" class="btn btn-success" data-target="#anomalies${reportEntry.testIdentifier}">No Regressions Found</button>
+            <% } else { %>
+            <button data-toggle="collapse" class="btn btn-warning" data-target="#anomalies${reportEntry.testIdentifier}">View Regressions</button>
+            <% } %>
+            <div id="anomalies${reportEntry.testIdentifier}" class="collapse">
+            <br/>
+            #for ( requestReportEntry <- reportEntry.requestReportEntries )
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="col-md-6">Comparison anomalies for ${requestReportEntry.requestName}</th>
+                                <th class="col-md-2">Recorded Content</th>
+                                <th class="col-md-2">Replayed Content</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        #for ( compareMessage <- requestReportEntry.reqMessages )
+                        <tr>
+                            <td>${compareMessage.message}</td>
+                            <td><textarea class="form-control" rows="5" id="recorded">${compareMessage.recorded}</textarea></td>
+                            <td><textarea class="form-control" rows="5" id="replayed">${compareMessage.replayed}</textarea></td>
+                        </tr>
+                        #end
+                        #for ( exception <- requestReportEntry.exception )
+                        <tr>
+                            <td>${exception.message}</td>
+                        </tr>
+                        #end
+                        </tbody>
+                    </table>
+                </div>
+            #end
+            </div>
+            #end
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+</html>

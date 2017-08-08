@@ -1,0 +1,9 @@
+version: '2'
+services:
+  version_1:
+    image: camiloribeiro/rest_shifter
+    ports:
+      - "9882:8080"
+    volumes:
+      - ./flavors/hateoas_service_v2:/root/.rest_shifter/flavors
+    command: -s

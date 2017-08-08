@@ -1,0 +1,1 @@
+{"items": ["http://localhost:9882/endpoint/shopping/items/item1", "http://localhost:9882/endpoint/shopping/items/item2", "http://localhost:9882/endpoint/shopping/items/item3"]}
